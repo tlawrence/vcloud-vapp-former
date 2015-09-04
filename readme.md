@@ -1,4 +1,4 @@
-#vCloud Environment Deployer
+#vCloud vApp Former
 ##A tool to provision securely separated VMs in vCloud Director
 
 ##How it works
