@@ -1,9 +1,8 @@
 vapp:
-  name: 'vapp_name'
-  vdc: 'vdc_name'
+  name: vapp_name
+  vdc: vdc_name
   catalogue: images
   template: centos_template
-  public_ip: 185.40.10.38
   bastion_ip: 10.0.0.11
   backbone: 
     name: autodeploy_net

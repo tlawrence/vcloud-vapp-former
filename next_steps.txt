@@ -1,0 +1,6 @@
+new config class
+logging helper
+change fog to fog_helpers
+add compose & recompose to Fog
+extend model to import vm to vapp
+
