@@ -1,0 +1,52 @@
+vapp:
+  name: '3-tier auto deployed'
+  vdc: 'SkyScape - The Deep Dive West (IL2-TRIAL-BASIC)'
+  catalogue: images
+  template: centos_template
+  public_ip: 185.40.10.38
+  bastion_ip: 10.0.0.11
+  backbone: 
+    name: autodeploy_net
+    gateway: 10.0.5.1
+    mask: 255.255.255.0
+    dns: 8.8.8.8
+  vms:
+  - name: web
+    quantity: 4
+    external: 10.0.1.50
+    gateway: 172.21.1.1
+    rules:
+    - name: web
+      source: any
+      port: 8080
+      protocol: TCP
+    - name: ssl
+      source: any
+      port: 443
+      protocol: TCP
+  - name: app
+    quantity: 1
+    external: 10.0.1.51
+    gateway: 172.21.2.1
+    rules:
+    - name: tomcat
+      source: 172.21.1.0/24
+      port: 8080
+      protocol: TCP
+    - name: udprule
+      source: 172.21.2.0/24
+      port: 8080
+      protocol: UDP
+    - name: anyrule
+      source: 172.21.2.0/24
+      port: 8080
+      protocol: ANY
+  - name: db
+    quantity: 1
+    external: 10.0.1.52
+    gateway: 172.21.3.1
+    rules:
+    - name: mysql
+      source: 172.21.2.0/24
+      port: 3306
+      protocol: TCP
