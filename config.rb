@@ -9,15 +9,42 @@ module VappFormer
       raise('File Not Found') unless File.exists?(filename)
       
       @full_config = YAML.load(File.open(filename))
-      @tiers = @full_config['vapp']['tiers']
-      @backbone = @full_config['vapp']['backbone']
-      @name = @full_config['vapp']['name']
-      @vdc = @full_config['vapp']['vdc']
-      @catalogue = @full_config['vapp']['catalogue']
-      @template = @full_config['vapp']['template']
-      @bastion_ip = @full_config['vapp']['bastion_ip']
+      set_fields(fields)
+      
     end
     
+    
+    def validate(object, type, present)      
+      validate_presence(object) if present
+      validate_type(object,type)
+    end
+    
+    def validate_presence(object)
+      raise ArgumentError unless object
+    end
+    
+    def validate_type(object,type)
+      raise ArgumentError unless object.class == type.class
+    end
+    
+    def set_fields(fields)
+      fields.each do |name, value|
+        validate(@full_config['vapp']["#{name.to_s}"],value,true)
+        instance_variable_set("@#{name.to_s}", @full_config['vapp']["#{name.to_s}"]) 
+      end
+    end
+    
+    def fields
+      {
+        :tiers => [],
+        :backbone => {},
+        :name => "",
+        :vdc => "",
+        :catalogue => "",
+        :template => "",
+        :bastion_ip => ""
+      }
+    end
 
     
   end

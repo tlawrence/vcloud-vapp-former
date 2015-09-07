@@ -50,6 +50,15 @@ describe VappFormer::Config do
       expect(@config.bastion_ip).to eq('10.0.0.11')
     end
     
+    it "validates presence of data" do
+        expect { @config.validate(nil,String,true)}.to raise_error(ArgumentError)
+    end
+    
+    
+    it "raises ArgumentError if data type incorrect" do
+      expect {@config.validate(Hash.new,String,false)}.to raise_error(ArgumentError)
+    end
+    
     
   end
 
